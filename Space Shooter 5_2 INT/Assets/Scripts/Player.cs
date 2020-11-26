@@ -16,7 +16,13 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   //transform.Translate(new Vector3(1,0,0)) 1 * 5 * Time.deltatime 5m/s
+    {   
+        CalculateMovement();
+    }
+
+    void CalculateMovement()
+    {
+        //transform.Translate(new Vector3(1,0,0)) 1 * 5 * Time.deltatime 5m/s
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         //Vector3.right == Vector3(1,0,0)
@@ -32,6 +38,32 @@ public class Player : MonoBehaviour
         //option 3
         Vector3 direction = new Vector3(horizontalInput,verticalInput,0);
         transform.Translate(direction * _speed * Time.deltaTime);
-        
+
+        //if the player position on the y axis is greater than 0
+        // if(transform.position.y >= 0)
+        // {
+        //     transform.position = new Vector3(transform.position.x,0,0);
+        // }
+        //if the player position on the y axis is <= -3.8f
+        // else if(transform.position.y <= -3.8f)
+        // {
+        //     transform.position = new Vector3(transform.position.x,-3.8f,0);
+        // }
+        //Mathf.Clamp(the value we wish to restrict,minimun value in can reach,maximum value it can reach)
+        transform.position = new Vector3(transform.position.x,Mathf.Clamp(transform.position.y,-3.8f,0),0);
+
+        //if the player position on the x axis is greater than 11
+        //x position = -11.3
+        if(transform.position.x > 11.3f)
+        {
+            //access the player position = Vector3(the position in where we want to teleport,current y position,0)
+            transform.position = new Vector3(-11.3f,transform.position.y,0);
+        }
+        //if the player position on the x axis is smaller than -11.3f
+        //x position = 11.3
+        else if (transform.position.x <= -11.3f)
+        {
+            transform.position = new Vector3(11.3f,transform.position.y,0);
+        }
     }
 }
