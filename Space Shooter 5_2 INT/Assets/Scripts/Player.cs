@@ -7,6 +7,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     // for private variables naming convention should be as follows: _name
     private float _speed = 3.5f;
+    [SerializeField]
+    private GameObject _laser;
+    [SerializeField]
+    private float _fireRate = 0.5f;
+    private float _canFire = -1f;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +25,13 @@ public class Player : MonoBehaviour
     void Update()
     {   
         CalculateMovement();
+
+        //Checking if space is being pressed && Time.time > _canFire = Time.time + _fireRate
+        if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            FireLaser();
+        }
+        
     }
 
     void CalculateMovement()
@@ -65,5 +79,23 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f,transform.position.y,0);
         }
+    }
+
+    void FireLaser()
+    {
+        Debug.Log("Space was pressed");
+        //every 0.5 of a second it will allow us to fire
+        _canFire = Time.time + _fireRate;
+        //Position of player (0,0,0) + (0,1,0) = final position of the laser (0,1,0)
+        Instantiate(_laser,transform.position + new Vector3(0,0.8f,0),Quaternion.identity);
+        
+        //Time.time(Timer thats starts as soon you play) 0
+        //_canFire -1f 
+        //Time.time 0.5f
+        //_canFire 0.5f + 0,5f
+        //Time.time(0.5f) > _canFire 1f;
+        //Time.time(1f)
+        //_canFire = Time.time(1f) + _fireRate(0.5f)
+        //Time.time(1f) > _canFire(1.5f)
     }
 }
