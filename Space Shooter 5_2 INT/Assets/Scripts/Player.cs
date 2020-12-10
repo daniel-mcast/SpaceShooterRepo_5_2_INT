@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
+
+    [SerializeField]
+    //Total health
+    private int _lives = 3;
     
 
     // Start is called before the first frame update
@@ -83,7 +87,7 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        Debug.Log("Space was pressed");
+        //Debug.Log("Space was pressed");
         //every 0.5 of a second it will allow us to fire
         _canFire = Time.time + _fireRate;
         //Position of player (0,0,0) + (0,1,0) = final position of the laser (0,1,0)
@@ -97,5 +101,17 @@ public class Player : MonoBehaviour
         //Time.time(1f)
         //_canFire = Time.time(1f) + _fireRate(0.5f)
         //Time.time(1f) > _canFire(1.5f)
+    }
+
+    public void Damage()
+    {
+        _lives-= 1;
+        Debug.Log(_lives); 
+
+        //if there are no lives kill the player
+        if(_lives < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
