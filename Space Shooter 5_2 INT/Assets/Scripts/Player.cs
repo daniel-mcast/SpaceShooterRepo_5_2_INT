@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         //every 0.5 of a second it will allow us to fire
         _canFire = Time.time + _fireRate;
         //Position of player (0,0,0) + (0,1,0) = final position of the laser (0,1,0)
-        Instantiate(_laser,transform.position + new Vector3(0,0.8f,0),Quaternion.identity);
+        Instantiate(_laser,transform.position + new Vector3(0,1f,0),Quaternion.identity);
         
         //Time.time(Timer thats starts as soon you play) 0
         //_canFire -1f 
