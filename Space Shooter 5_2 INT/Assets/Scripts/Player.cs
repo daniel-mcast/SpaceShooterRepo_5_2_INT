@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laser;
     [SerializeField]
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
@@ -17,6 +19,8 @@ public class Player : MonoBehaviour
     //Total health
     private int _lives = 3;
     private SpawnManager _spawnManager;
+    [SerializeField]
+    private bool _isTripleShotActive = false;
     
     // Start is called before the first frame update
     void Start()
@@ -97,8 +101,16 @@ public class Player : MonoBehaviour
         //Debug.Log("Space was pressed");
         //every 0.5 of a second it will allow us to fire
         _canFire = Time.time + _fireRate;
-        //Position of player (0,0,0) + (0,1,0) = final position of the laser (0,1,0)
-        Instantiate(_laser,transform.position + new Vector3(0,1f,0),Quaternion.identity);
+        if(_isTripleShotActive == true)
+        {
+            Instantiate(_tripleShotPrefab,transform.position,Quaternion.identity);
+        }
+        else
+        {
+            //Position of player (0,0,0) + (0,1,0) = final position of the laser (0,1,0)
+            Instantiate(_laser,transform.position + new Vector3(0,1f,0),Quaternion.identity);
+        }
+        
         
         //Time.time(Timer thats starts as soon you play) 0
         //_canFire -1f 
@@ -121,5 +133,19 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void ActiveTripleShot()
+    {
+        _isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        //wait for 5 seconds
+        yield return new WaitForSeconds(5f);
+        //turn off the triple shot
+        _isTripleShotActive = false;
     }
 }
