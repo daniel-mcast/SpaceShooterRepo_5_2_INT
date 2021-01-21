@@ -49,3 +49,6 @@ TagManager:
   - name: Foreground
     uniqueID: 2828292521
     locked: 0
+  - name: Shield
+    uniqueID: 3517603675
+    locked: 0
