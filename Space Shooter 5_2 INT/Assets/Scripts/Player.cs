@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
     private UIManager _uiManager;
+    [SerializeField]
+    private GameObject _rightEngine, _leftEngine;
     
     // Start is called before the first frame update
     void Start()
@@ -148,6 +150,16 @@ public class Player : MonoBehaviour
         }
         _lives-= 1;
         _uiManager.UpdateLives(_lives);
+
+        if(_lives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+        else if(_lives == 1)
+        {
+            _leftEngine.SetActive(true);
+        }
+        
         Debug.Log(_lives); 
 
         //if there are no lives kill the player
